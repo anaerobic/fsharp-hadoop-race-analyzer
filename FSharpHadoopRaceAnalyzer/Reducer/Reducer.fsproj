@@ -5,14 +5,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>aedf94bc-49d3-4752-86fe-4374818e3052</ProjectGuid>
+    <ProjectGuid>27ca6504-3944-4a2d-bb74-eed0ae36b867</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Mapper</RootNamespace>
-    <AssemblyName>Mapper</AssemblyName>
+    <RootNamespace>Reducer</RootNamespace>
+    <AssemblyName>Reducer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
-    <Name>Mapper</Name>
+    <Name>Reducer</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Debug\Mapper.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Reducer.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -34,7 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Release\Mapper.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Reducer.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
@@ -54,7 +54,7 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="Mapper.fs" />
+    <Compile Include="Reducer.fs" />
     <Compile Include="Controller.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">
-      <HintPath>..\..\FSharpHadoopRaceAnalyzer\packages\FSharp.Data.2.2.2\lib\net40\FSharp.Data.dll</HintPath>
+      <HintPath>..\packages\FSharp.Data.2.2.2\lib\net40\FSharp.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
@@ -73,9 +73,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common\Common.fsproj">
+    <ProjectReference Include="..\Common\Common.fsproj">
       <Name>Common</Name>
       <Project>{2aac644c-69bf-4cba-b3f7-3f7f755a1ee0}</Project>
       <Private>True</Private>
