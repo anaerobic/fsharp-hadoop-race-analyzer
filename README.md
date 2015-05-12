@@ -1,2 +1,51 @@
 # fsharp-hadoop-race-analyzer
-A simple F# service to execute a Hadoop job using MRRunner in the Microsoft .NET SDK For Hadoop
+A simple F# service to execute a Hadoop job using Hadoop Streaming
+
+##Usage
+Note: I am currently just trying to get this to run, so I am doing some evil..
+1a. Create a ~/hadoop/share/data directory
+1b. Create a ~/hadoop/share/Debug directory
+2. Build the solution and copy all Mapper & Reducer bin/Debug contents to ~/hadoop/share/Debug
+3. Create a file ~/hadoop/share/data/someData with some data like the following:
+```
+0	{"groupName":"female Checkpoint 0","bib":4911,"time":"00:00:02.8750000","age":50}
+1	{"groupName":"female 48-53 Checkpoint 0","bib":4911,"time":"00:00:02.8750000","age":50}
+2	{"groupName":"Overall Checkpoint 0","bib":1115,"time":"00:00:07.2700000","age":26}
+3	{"groupName":"female Checkpoint 0","bib":1115,"time":"00:00:07.2700000","age":26}
+4	{"groupName":"female 23-28 Checkpoint 0","bib":1115,"time":"00:00:07.2700000","age":26}
+5	{"groupName":"Overall Checkpoint 0","bib":1511,"time":"00:00:10.2890000","age":34}
+6	{"groupName":"female Checkpoint 0","bib":1511,"time":"00:00:10.2890000","age":34}
+```
+5. Spin up Hadoop in Docker with Mono and FSharp installed with something like this:
+```
+docker run --rm -p 8088:8088 -p 8042:8042 -v ~/hadoop/share:/share -i -t anaerobic/hadoop-fsharp /etc/bootstrap.sh -bash
+```
+6. Run inside Hadoop with something like this:
+```
+cd $HADOOP_PREFIX
+
+bin/hdfs dfs -mkdir /hdfs
+
+bin/hdfs dfs -copyFromLocal /share/data/someData /hdfs/someData
+
+bin/hdfs dfs -rm -r /hdfs-output
+
+bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs" -output "/hdfs-output" -mapper "/share/Debug/Mapper.exe" -reducer "/share/Debug/Reducer.exe" -file "/share/Debug/Mapper.exe" -file "/share/Debug/Reducer.exe"
+```
+7. Get the following error:
+```
+2015-05-12 16:13:36,991 FATAL [IPC Server handler 3 on 57544] org.apache.hadoop.mapred.TaskAttemptListenerImpl: Task: attempt_1431461454847_0001_m_000001_0 - exited : java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 126
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:322)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:535)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:450)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:163)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1628)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+```
+8. Poke around aimlessly in the Hadoop Web UI at http://<host_ip>:8088/cluster
