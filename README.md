@@ -55,5 +55,22 @@ Get the following error:
 	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1628)
 	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
 ```
+Or this one:
+```
+15/05/12 19:25:54 INFO mapreduce.Job: Task Id : attempt_1431472291602_0005_m_000000_0, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 1
+        at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:322)
+        at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:535)
+        at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+        at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+        at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+        at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:450)
+        at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+        at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:163)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at javax.security.auth.Subject.doAs(Subject.java:415)
+        at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1628)
+        at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+```
 
 Feel free to poke around aimlessly in the Hadoop Web UI at http://<host_ip>:8088/cluster
