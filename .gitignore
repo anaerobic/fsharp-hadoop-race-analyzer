@@ -195,4 +195,5 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
-MRLib/
+# package restore doesn't copy these over if they DNE :(
+# MRLib/
