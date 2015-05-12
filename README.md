@@ -36,7 +36,7 @@ bin/hdfs dfs -copyFromLocal /share/data/someData /hdfs/someData
 
 bin/hdfs dfs -rm -r /hdfs-output
 
-bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs" -output "/hdfs-output" -mapper "/share/Debug/Mapper.exe" -reducer "/share/Debug/Reducer.exe" -file "/share/Debug/Mapper.exe" -file "/share/Debug/Reducer.exe"
+bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs" -output "/hdfs-output" -mapper "mono /share/Debug/Mapper.exe" -reducer "mono /share/Debug/Reducer.exe" -file "/share/Debug/Mapper.exe" -file "/share/Debug/Reducer.exe"
 ```
 
 Get the following error:
