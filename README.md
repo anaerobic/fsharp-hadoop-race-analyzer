@@ -30,6 +30,8 @@ Run inside Hadoop with something like this:
 ```
 cd $HADOOP_PREFIX
 
+bin/hdfs dfs -mkdir /hdfs
+
 bin/hdfs dfs -mkdir /hdfs/race
 
 bin/hdfs dfs -copyFromLocal /share/race/data/results /hdfs/race/results
