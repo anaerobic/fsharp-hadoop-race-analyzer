@@ -1,6 +1,6 @@
 ﻿module Reducer
 
-open JsonResults
+open JsonTypes
 open System
 
 let Reduce (key : string) (values : seq<string>) = 

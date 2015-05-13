@@ -89,6 +89,14 @@ bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2
 And we can check the output with:
 ```
 bin/hdfs dfs -cat /hdfs-output/race/*
+
+Overall Checkpoint 0    {"age":34,"time":"00:00:10.2890000"}
+Overall Checkpoint 0    {"age":26,"time":"00:00:07.2700000"}
+female 23-28 Checkpoint 0       {"age":26,"time":"00:00:07.2700000"}
+female 48-53 Checkpoint 0       {"age":50,"time":"00:00:02.8750000"}
+female Checkpoint 0     {"age":26,"time":"00:00:07.2700000"}
+female Checkpoint 0     {"age":50,"time":"00:00:02.8750000"}
+female Checkpoint 0     {"age":34,"time":"00:00:10.2890000"}
 ```
 
 Feel free to poke around aimlessly in the Hadoop Web UI at

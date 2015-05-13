@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="ParseCommandLine.fs" />
     <Compile Include="InputOutput.fs" />
-    <Compile Include="JsonResults.fs" />
+    <Compile Include="JsonTypes.fs" />
     <Content Include="app.config" />
     <Content Include="packages.config" />
   </ItemGroup>

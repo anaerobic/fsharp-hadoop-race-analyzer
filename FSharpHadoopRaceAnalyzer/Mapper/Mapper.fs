@@ -1,16 +1,16 @@
 ﻿module Mapper
 
-open JsonResults
+open JsonTypes
+open Newtonsoft.Json
 open System
 
 let private parseJson (value : string) = 
-
-    try
+    try 
         let splits = value.Split('\t')
         let json = splits.[1] |> result.Parse
-        Some(json.GroupName, json)
-    with
-    | :? ArgumentException -> None
+        Some(json.GroupName, 
+             JsonConvert.SerializeObject({ age = json.Age
+                                           time = json.Time.TimeOfDay }))
+    with :? ArgumentException -> None
 
-let Map (value: string) =
-    parseJson value
+let Map(value : string) = parseJson value
