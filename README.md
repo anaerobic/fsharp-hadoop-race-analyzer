@@ -55,7 +55,13 @@ Get the following error:
 	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1628)
 	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
 ```
-Or this one:
+
+Or if we run it without the -file arguments like:
+```
+bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs" -output "/hdfs-output" -mapper "mono /share/Debug/Mapper.exe" -reducer "mono /share/Debug/Reducer.exe"
+```
+
+We get this error:
 ```
 15/05/12 19:25:54 INFO mapreduce.Job: Task Id : attempt_1431472291602_0005_m_000000_0, Status : FAILED
 Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 1
@@ -73,4 +79,17 @@ Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess fa
         at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
 ```
 
-Feel free to poke around aimlessly in the Hadoop Web UI at http://<host_ip>:8088/cluster
+However, it works if we only run the Mapper with:
+```
+bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs" -output "/hdfs-output" -mapper "mono /share/Debug/Mapper.exe"
+```
+
+And we can check the output with:
+```
+bin/hdfs dfs -cat /hdfs-output/*
+```
+
+Feel free to poke around aimlessly in the Hadoop Web UI at
+```
+http://<host_ip>:8088/cluster
+```
