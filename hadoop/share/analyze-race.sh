@@ -8,7 +8,7 @@ bin/hdfs dfs -mkdir /hdfs/race
 
 bin/hdfs dfs -copyFromLocal /share/data/race/* /hdfs/race/
 
-bin/hdfs fs -rm -r /hdfs-output/race
+bin/hdfs dfs -rm -r /hdfs-output/race
 
 bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs/race" -output "/hdfs-output/race" -mapper "mono /share/race/Debug/Mapper.exe"
 
