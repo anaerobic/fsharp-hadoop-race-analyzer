@@ -4,13 +4,13 @@ A simple F# service to execute a Hadoop job using Hadoop Streaming
 ##Usage
 Note: I am currently just trying to get this to run, so I am doing some evil..
 
-Create a ~/hadoop/share/data directory
+Create a ~/hadoop/share/race/data directory
 
-Create a ~/hadoop/share/Debug directory
+Create a ~/hadoop/share/race/Debug directory
 
-Build the solution and copy all Mapper & Reducer bin/Debug contents to ~/hadoop/share/Debug
+Build the solution and copy all Mapper & Reducer bin/Debug contents to ~/hadoop/share/race/Debug
 
-Create a file ~/hadoop/share/data/someData with some data like the following:
+Create a file ~/hadoop/share/data/results with some data like the following:
 ```
 0	{"groupName":"female Checkpoint 0","bib":4911,"time":"00:00:02.8750000","age":50}
 1	{"groupName":"female 48-53 Checkpoint 0","bib":4911,"time":"00:00:02.8750000","age":50}
@@ -30,13 +30,13 @@ Run inside Hadoop with something like this:
 ```
 cd $HADOOP_PREFIX
 
-bin/hdfs dfs -mkdir /hdfs
+bin/hdfs dfs -mkdir /hdfs/race
 
-bin/hdfs dfs -copyFromLocal /share/data/someData /hdfs/someData
+bin/hdfs dfs -copyFromLocal /share/race/data/results /hdfs/race/results
 
-bin/hdfs dfs -rm -r /hdfs-output
+bin/hdfs dfs -rm -r /hdfs-output/race
 
-bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs" -output "/hdfs-output" -mapper "mono /share/Debug/Mapper.exe" -reducer "mono /share/Debug/Reducer.exe" -file "/share/Debug/Mapper.exe" -file "/share/Debug/Reducer.exe"
+bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs/race" -output "/hdfs-output/race" -mapper "mono /share/race/Debug/Mapper.exe" -reducer "mono /share/race/Debug/Reducer.exe" -file "/share/race/Debug/Mapper.exe" -file "/share/race/Debug/Reducer.exe"
 ```
 
 Get the following error:
@@ -58,7 +58,7 @@ Get the following error:
 
 Or if we run it without the -file arguments like:
 ```
-bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs" -output "/hdfs-output" -mapper "mono /share/Debug/Mapper.exe" -reducer "mono /share/Debug/Reducer.exe"
+bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs/race" -output "/hdfs-output/race" -mapper "mono /share/race/Debug/Mapper.exe" -reducer "mono /share/race/Debug/Reducer.exe"
 ```
 
 We get this error:
@@ -81,12 +81,12 @@ Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess fa
 
 However, it works if we only run the Mapper with:
 ```
-bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs" -output "/hdfs-output" -mapper "mono /share/Debug/Mapper.exe"
+bin/hadoop jar /usr/local/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar -input "/hdfs/race" -output "/hdfs-output/race" -mapper "mono /share/race/Debug/Mapper.exe"
 ```
 
 And we can check the output with:
 ```
-bin/hdfs dfs -cat /hdfs-output/*
+bin/hdfs dfs -cat /hdfs-output/race/*
 ```
 
 Feel free to poke around aimlessly in the Hadoop Web UI at
